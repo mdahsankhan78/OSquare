@@ -1,0 +1,18 @@
+{
+  "appId": "com.example.app",
+  "appName": "osquare",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0,          
+      "launchAutoHide": false,          
+      "androidScaleType": "CENTER_CROP", 
+      "showSpinner": false,
+      "spinnerColor": "#999999",
+      "splashFullScreen": false,       
+      "splashImmersive": false,        
+      "useDialog": false                
+    }
+  }
+  
+}
