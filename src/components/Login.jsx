@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Link, useNavigate } from 'react-router-dom'
+import { Label } from "@/components/ui/label"   
 import { Button } from './ui/button'
 import { Input2 } from './ui/input2'
 import { faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
+import axios from 'axios'
 
 const Login = () => {
     const [next, setNext] = useState(false);
     const [data, setData] = useState({ email: '', password: '' });
-    const [msg, setMsg] = useState('');
+    const [msg, setMsg] = useState();
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     useEffect(() => {
-        document.body.style.overflow = 'hidden'; // Disable scrolling
+        document.body.style.overflow = 'hidden';
         return () => {
-            document.body.style.overflow = ''; // Revert back to original state when component unmounts
+            document.body.style.overflow = '';
         };
     }, []);
 
@@ -26,21 +27,51 @@ const Login = () => {
     }
 
     const handleNext = (e) => {
-        if (data.email === '') {
-            setMsg('Please type your Email address')
+        if (!emailRegex.test(data.email)) {
+            setMsg('Email must be a valid email address')
         }
         else {
             setMsg('')
             setNext(true);
         }
     }
-
-    const handleSubmit = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
-        setTimeout(() => {
-            window.location.href = `/home/Ahsan Khan/${data.email}/${data.password}`;
-        }, 1000);
-    }
+
+        axios.post('https://api.osquare.live/api/User/Login', data)
+            .then(response => {
+                console.log(response);
+                setMsg('')
+                const token = response.data.token;
+                if (token) {
+                    localStorage.setItem('token', token);
+                    setTimeout(() => {
+                        window.location.href = `/`;
+                    }, 1000);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+
+                if (error.response) {
+                    if (error.response.status === 400) {
+                        if (error.response.data && error.response.data.email) {
+                            setMsg(error.response.data.email);
+                        }
+                        else if (error.response.data && error.response.data.password) {
+                            setMsg(error.response.data.password);
+                        }
+                    } else {
+                        setMsg('An error occurred. Please try again.');
+                    }
+                }
+                else {
+                    setMsg('Network error. Please check your connection.');
+                }
+            });
+    };
+
+
 
     return (
         <>
@@ -49,33 +80,31 @@ const Login = () => {
                     <img src="/images/osquare-dark.png" className="h-14 w-auto mt-10" alt="Logo" />
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md">
+                <form onSubmit={handleLogin} className="space-y-4 w-full max-w-md">
                     {next ?
                         <>
-                            <p className='cursor-pointer' onClick={() => setNext(false)}>{data.email}</p>
+
                             <Label htmlFor='pass' className='text-xl font-semibold'>Sign In</Label>
                             <Input2 id='pass' placeholder='Password' value={data.password} name='password' onChange={handleInput} icon={faEyeSlash} icon2={faEye} />
-                            <div className="mt-6">
-                                <div className="mb-8">
+                            <p className='text-red-600'>{msg}</p>
+                            {/* <div className="mb-2">
                                     <p className="text-black font-normal">Forgot Password? <br /><p to={'/register'} className="font-semibold text-primary">Email code to {data.email}</p></p>
-                                    <p className='text-red-600 mt-4'>{msg}</p>
-                                </div>
-
-                                <Button type='submit' disabled={!data.password}>Sign in</Button>
-                            </div>
+                                </div> */}
+                            <p className='cursor-pointer mb-2' onClick={() => setNext(false)}>{data.email}</p>
+                            <Button type='submit' disabled={!data.password}>Sign in</Button>
                         </>
                         :
                         <>
                             <Label htmlFor='email' className='text-xl font-semibold'>Sign In</Label>
                             <Input id='email' type='email' placeholder='Email, Phone or Skype' value={data.email} name='email' onChange={handleInput} icon={faEnvelope} />
+                            <p className='text-red-600 mt-2'>{msg}</p>
                             <div className="mt-6">
-                                <div className="mb-8">
+                                {/* <div className="mb-2">
                                     <p className="text-black font-normal">Don't have an account? <Link to={'/register'} className="font-semibold text-primary">Create one</Link></p>
-                                    <p className='text-red-600 mt-4'>{msg}</p>
-                                </div>
+                                </div> */}
 
 
-                                <Button onClick={handleNext} className='' disabled={!data.email}>Next</Button>
+                                <Button onClick={handleNext} disabled={!data.email}>Next</Button>
                             </div>
                         </>}
                 </form>

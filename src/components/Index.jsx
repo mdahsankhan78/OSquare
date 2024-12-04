@@ -1,22 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './Index/Header'
-import { useParams } from 'react-router-dom';
 import Cards from './Index/Cards';
 import BottomBar from './BottomBar';
 import SplashScreen from './ui/SplashScreen';
-import Navbar from './ui/Navbar';
 import Navigation from './ui/Bar';
+import TokenExpired from '../api/TokenExpired';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
-    const { name, email, password } = useParams();
+    const [isUserLoggedIn, setisUserLoggedIn] = useState(true)
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!isUserLoggedIn) {
+            navigate('/login');
+        }
+    }, [isUserLoggedIn, navigate]);
 
     return (
         <>
-            <Header name={name} email={email} />
+            <TokenExpired onDataFetched={setisUserLoggedIn} />
+            <Header />
 
             <div className="mx-4 mb-36 py-8">
 
-                <Cards name={name} email={email}/>
+                <Cards />
 
             </div>
             <Navigation />

@@ -5,7 +5,7 @@ import { Search } from '../ui/input-search';
 import { Link } from 'react-router-dom';
 import GoBack from '../ui/GoBack';
 
-const Header = ({ name, email }) => {
+const Header = ({ name, email, profilePic}) => {
     const nameParts = name.split(" ");
 
     // Extract the first letter of each part of the name
@@ -17,9 +17,7 @@ const Header = ({ name, email }) => {
                 <GoBack color={'white'}/>
                 <div className="flex justify-center">
                     <div className="rounded-2xl shadow-card bg-white px-6 py-4 absolute -bottom-10 flex items-center gap-x-4">
-                        <div className="bg-secondary shadow-card rounded-full h-20 w-20 flex items-center justify-center text-3xl font-bold text-white">
-                            {initials}
-                        </div>
+                    <img src={`https://api.osquare.live/${profilePic}`} className='rounded-full h-20 w-20 ' alt="" />
                         <div>
                             <h1 className='text-xl font-semibold mt-2 text-black'>{name}</h1>
                             <h1 className='text-xl font-semibold text-foreground mb-3'>Add another account</h1>

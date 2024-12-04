@@ -1,9 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { faCamera, faHome, faCog, faComment, faPerson } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 
 const Navigation = () => {
+    const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+    const handleResize = () => {
+        const isKeyboardVisible = window.innerHeight < 400;
+        setIsKeyboardOpen(isKeyboardVisible);
+    };
+
+    useEffect(() => {
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     const Menus = [
         { name: "Home", icon: faHome, dis: "translate-x-0" },
         { name: "Profile", icon: faPerson, dis: "translate-x-16" },
@@ -13,7 +29,7 @@ const Navigation = () => {
     ];
     const [active, setActive] = useState(0);
     return (
-        <div className="fixed bottom-0 bg-gradient-to-r from-[#454FCA] to-[#F86C70] px-6 bar-radius text-white w-full ">
+        <div className={`fixed bottom-0 bg-gradient-to-r from-[#454FCA] to-[#F86C70] px-6 bar-radius text-white w-full ${isKeyboardOpen ? 'hidden' : ''}`}>
             <ul className="flex relative justify-between">
 
                 <span
@@ -26,12 +42,12 @@ const Navigation = () => {
                 ></span>
                 {Menus.map((menu, i) => (
                     <li key={i} className="w-16">
-                        {active === i && 
-                        <motion.div layoutId='link-1' class="absolute bottom-10 h-16 w-16 rounded-full border-4 border-white bg-gradient-to-r from-[#454FCA] to-[#F86C70]">
-                        </motion.div>
+                        {active === i &&
+                            <motion.div layoutId='link-1' class="absolute bottom-10 h-16 w-16 rounded-full border-4 border-white bg-gradient-to-r from-[#454FCA] to-[#F86C70]">
+                            </motion.div>
                         }
                         <a
-                            className="flex flex-col text-center pt-6 text-white "
+                            className="flex flex-col text-center pt-6 text-white hover:text-white "
                             onClick={() => setActive(i)}
                         >
                             <span

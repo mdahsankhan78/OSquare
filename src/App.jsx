@@ -20,12 +20,12 @@ function App() {
         <>
           <Router>
             <Routes>
-              <Route path="/" element={<Splash />} />
+              <Route path="/home" element={<Splash />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/home/:name/:email/:password" element={<Index />} />
-              <Route path="/profile/:name/:email" element={<Profile />} />
-              <Route path="/dashboard/:name/:email" element={<Dashboard />} />
+              <Route path="/" element={<Index />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
           </Router>
         </>)

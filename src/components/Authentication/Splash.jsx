@@ -27,10 +27,10 @@ const Splash = () => {
                 <div className="w-full">
                     <CustomLink to={'/login'} text={'Sign in with Email or Phone'} className={'w-full'} />
 
-                    <div className="mt-6">
+                    {/* <div className="mt-6">
                         <p className="text-black font-normal">Don't have an account? <Link to={'/register'} className="font-semibold text-primary">Create one</Link></p>
                         <p className="underline text-black font-semibold mt-2">Terms of use</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

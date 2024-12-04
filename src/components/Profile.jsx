@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import GoBack from './ui/GoBack'
 import { useNavigate, useParams } from 'react-router-dom';
 import OutlineButton from './ui/OutlineButton';
 import { faBuilding, faClock, faEdit, faEnvelope, faFile, faFlag, faIdCard, faPerson, faPhone, faRightToBracket, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Header from './Profile/Header';
+import UserDetails from '../api/UserDetails';
+import GetShift from '../api/GetShift';
 
 const Profile = () => {
-    const { name, email } = useParams();
+    const [userData, setUserData] = useState(null);
+    const [shift, setShift] = useState(null);
 
-    const nameParts = name.split(" ");
-
-    // Extract the first letter of each part of the name
-    const initials = nameParts.map(part => part.charAt(0).toUpperCase()).join("");
-
+    const handleDataFetched = (data) => {
+        setUserData(data);
+    };
+    const handleShiftFetched = (shift) => {
+        setShift(shift);
+    };
+    
     return (
         <>
-            <Header name={name} email={email} />
+            <UserDetails onDataFetched={handleDataFetched} />
+            {userData != null &&
+            <>
+            <GetShift onShiftFetched={handleShiftFetched} Id={userData.shiftId}/>
+            <Header name={userData.firstName} email={userData.email} profilePic={userData.profilePic}/>
             <div className="p-4">
                 <div className="pt-16 pb-8 text-black text-lg space-y-8 text-center">
                     <div className="shadow-card p-4 rounded-lg bg-gray-100 space-y-2 overflow-x-auto data-scroll">
@@ -26,7 +35,7 @@ const Profile = () => {
                                 <p>Name</p>
                             </div>
                             <p className='col-span-1'>:</p>
-                            <p className='col-span-2'>{name}</p>
+                            <p className='col-span-2'>{userData.firstName}</p>
                         </div>
                         <div className="grid grid-cols-5 gap-x-2">
                             <div className='col-span-2 flex items-center space-x-4'>
@@ -34,7 +43,7 @@ const Profile = () => {
                                 <p>Email</p>
                             </div>
                             <p className='col-span-1'>:</p>
-                            <p className='col-span-2'>{email}</p>
+                            <p className='col-span-2'>{userData.email}</p>
                         </div>
                         <div className="grid grid-cols-5 gap-x-2">
                             <div className='col-span-2 flex items-center space-x-4'>
@@ -42,7 +51,7 @@ const Profile = () => {
                                 <p>Phone</p>
                             </div>
                             <p className='col-span-1'>:</p>
-                            <p className='col-span-2 '>---</p>
+                            <p className='col-span-2 '>+92 {userData.contact}</p>
                         </div>
                     </div>
                     <div className="shadow-card p-4 rounded-lg bg-gray-100 space-y-2 overflow-x-auto data-scroll">
@@ -52,7 +61,7 @@ const Profile = () => {
                                 <p>Department</p>
                             </div>
                             <p className='col-span-1'>:</p>
-                            <p className='col-span-2'>---</p>
+                            <p className='col-span-2'>{userData.department}</p>
                         </div>
                         <div className="grid grid-cols-5 gap-x-2">
                             <div className='col-span-2 flex items-center space-x-4'>
@@ -60,7 +69,7 @@ const Profile = () => {
                                 <p>Designation</p>
                             </div>
                             <p className='col-span-1'>:</p>
-                            <p className='col-span-2'>---</p>
+                            <p className='col-span-2'>{userData.designation}</p>
                         </div>
                         <div className="grid grid-cols-5 gap-x-2">
                             <div className='col-span-2 flex items-center space-x-4'>
@@ -68,7 +77,7 @@ const Profile = () => {
                                 <p>Reports to</p>
                             </div>
                             <p className='col-span-1'>:</p>
-                            <p className='col-span-2'>---</p>
+                            <p className='col-span-2'>{userData.reportsTo}</p>
                         </div>
                         <div className="grid grid-cols-5 gap-x-2">
                             <div className='col-span-2 flex items-center space-x-4'>
@@ -76,7 +85,7 @@ const Profile = () => {
                                 <p>Cost</p>
                             </div>
                             <p className='col-span-1'>:</p>
-                            <p className='col-span-2'>---</p>
+                            <p className='col-span-2'>{userData.cost}</p>
                         </div>
                         <div className="grid grid-cols-5 gap-x-2">
                             <div className='col-span-2 flex items-center space-x-4'>
@@ -84,7 +93,7 @@ const Profile = () => {
                                 <p>Shift</p>
                             </div>
                             <p className='col-span-1'>:</p>
-                            <p className='col-span-2'>---</p>
+                            <p className='col-span-2'>{shift && shift.title}</p>
                         </div>
                         <div className="grid grid-cols-5 gap-x-2">
                             <div className='col-span-2 flex items-center space-x-4'>
@@ -92,7 +101,7 @@ const Profile = () => {
                                 <p>Machine ID</p>
                             </div>
                             <p className='col-span-1'>:</p>
-                            <p className='col-span-2'>---</p>
+                            <p className='col-span-2'>{userData.machineId}</p>
                         </div>
                     </div>
                 </div>
@@ -102,8 +111,10 @@ const Profile = () => {
                     <OutlineButton text={'Sign out'} />
                 </div>
             </div>
+            </>
+            }
 
-            <style jsx>
+            <style>
                 {`
                 /* styles.css */
                 .data-scroll::-webkit-scrollbar {

@@ -4,9 +4,17 @@ import { useOutsideClick } from "../ui/use-outside-click";
 import CustomLink from "../ui/CustomLink";
 import { faBuilding, faClock, faEdit, faEnvelope, faFile, faFlag, faIdCard, faPhone, faRightToBracket, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import GetEmployees from "../../api/GetEmployees";
 
 export function ExpandableCardDemo() {
-    const [activeId, setActiveId] = useState(null); // Store the id of the active card
+    const [userData, setUserData] = useState(null);
+
+    const handleDataFetched = (data) => {
+        setUserData(data);
+    };
+
+
+    const [activeId, setActiveId] = useState(null);
     const ref = useRef(null);
 
     useEffect(() => {
@@ -26,13 +34,14 @@ export function ExpandableCardDemo() {
         return () => window.removeEventListener("keydown", onKeyDown);
     }, [activeId]);
 
-    useOutsideClick(ref, () => setActiveId(null)); // Close the active card when clicking outside
+    useOutsideClick(ref, () => setActiveId(null));
 
     // Find the active card based on the activeId
-    const activeCard = cards.find((card) => card.id === activeId);
+    const activeCard = userData && userData.find((user) => user.id === activeId);
 
     return (
         <div className="my-20">
+            <GetEmployees onDataFetched={handleDataFetched} />
             <div className="flex items-center">
                 <h1 className='text-black text-2xl font-semibold'>Employees</h1>
                 <CustomLink text={'Add Employee'} className='ml-auto px-6' />
@@ -76,9 +85,7 @@ export function ExpandableCardDemo() {
                             ref={ref}
                             className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-y-auto dashboard-scroll">
                             <motion.div layoutId={`image-${activeCard.id}`} className="flex flex-col items-center border-b-2 border-border py-6">
-                                <div className="bg-secondary shadow-card rounded-full h-28 w-28 flex items-center justify-center text-3xl font-bold text-white">
-                                    {activeCard.dp}
-                                </div>
+                                <img src={`https://api.osquare.live/${activeCard.profilePic}`} className="rounded-full h-12 w-12" alt="" />
 
                                 <motion.h1 layoutId={`name-${activeCard.id}`} className='text-2xl font-semibold mt-2 text-black'>{activeCard.name}</motion.h1>
                                 <motion.h1 layoutId={`designation-${activeCard.id}`} className='text-xl font-semibold text-foreground mb-3'>{activeCard.designation}</motion.h1>
@@ -170,38 +177,36 @@ export function ExpandableCardDemo() {
             </AnimatePresence>
 
             <ul className="mx-auto w-full gap-4 mt-4">
-                {cards.map((card) => (
+                {userData && userData.map((user) => (
                     <motion.div
-                        layoutId={`card-${card.id}`}
-                        key={`card-${card.id}`}
-                        onClick={() => setActiveId(card.id)} // Set active card based on id
+                        layoutId={`card-${user.id}`}
+                        key={`card-${user.id}`}
+                        onClick={() => setActiveId(user.id)} // Set active card based on id
                         className="p-4 flex flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 cursor-pointer border-b-2 border-gray-300">
                         <div className="flex gap-4 flex-row">
-                            <motion.div layoutId={`image-${card.id}`}>
-                                <div className="bg-secondary shadow-card rounded-full h-14 w-14 flex items-center justify-center text-2xl font-bold text-white">
-                                    {card.dp}
-                                </div>
+                            <motion.div layoutId={`image-${user.id}`}>
+                                <img src={`https://api.osquare.live/${user.profilePic}`} className="rounded-full h-12 w-12" alt="" />
                             </motion.div>
 
                             <div>
                                 <motion.h3
-                                    layoutId={`name-${card.id}`}
+                                    layoutId={`name-${user.id}`}
                                     className="font-medium text-neutral-800 dark:text-neutral-200 md:text-left">
-                                    {card.name}
+                                    {user.firstName} {user.lastName}
                                 </motion.h3>
                                 <motion.p
-                                    layoutId={`designation-${card.id}`}
+                                    layoutId={`designation-${user.id}`}
                                     className="text-neutral-600 dark:text-neutral-400 md:text-left">
-                                    {card.designation}
+                                    {user.designation}
                                 </motion.p>
                             </div>
                         </div>
                         <motion.button
                             layout
                             className="flex items-center justify-center bg-white shadow-cta hover:shadow-cta-hover h-10 w-10 rounded-full"
-                            onClick={() => setActiveId(card.id)} // Set active card on click
+                            onClick={() => setActiveId(user.id)} // Set active card on click
                         >
-                            {card.ctaText}
+                            Details
                         </motion.button>
 
                     </motion.div>
