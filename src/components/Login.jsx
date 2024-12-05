@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"   
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"   
 import { Button } from './ui/button'
 import { Input2 } from './ui/input2'
 import { faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
