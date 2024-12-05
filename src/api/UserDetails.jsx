@@ -5,7 +5,7 @@ import {jwtDecode} from 'jwt-decode';
 const UserDetails = ({ onDataFetched }) => {
     const [id, setId] = useState(null);
     const token = localStorage.getItem('token');
-    
+    const apiUrl = import.meta.env.VITE_GETEMPLOYEE_URL;
     useEffect(() => {
         if (token) {
             try {
@@ -22,14 +22,15 @@ const UserDetails = ({ onDataFetched }) => {
             const fetchData = async () => {
                 try {
                     const response = await axios.get(
-                        `https://api.osquare.live/api/Employee/GetByUserId?id=${id}`,
+                        `${apiUrl}${id}`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
                             },
                         }
                     );
-                    onDataFetched(response.data); 
+                    onDataFetched(response.data);
+                    
                 } catch (err) {
                     console.error('Error fetching user data:', err);
                 }

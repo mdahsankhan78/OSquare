@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { useEffect } from 'react'
 
 const GetShift = ({ Id, onShiftFetched }) => {
+    const apiUrl = import.meta.env.VITE_GETSHIFT_URL;
     const token = localStorage.getItem('token');
     
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `https://api.osquare.live/api/Shift/GetById?id=${Id}`,
+                    `${apiUrl}${Id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,

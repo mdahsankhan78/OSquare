@@ -3,13 +3,14 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
 const GetEmployees = ({onDataFetched}) => {
+    const apiUrl = import.meta.env.VITE_GETEMPLOYEES_URL;
     const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `https://api.osquare.live/api/Employee/GetAll`,
+                    `${apiUrl}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -23,7 +24,7 @@ const GetEmployees = ({onDataFetched}) => {
         };
 
         fetchData();
-    }, [token, onDataFetched]);
+    }, [token]);
 
     return null;
 }

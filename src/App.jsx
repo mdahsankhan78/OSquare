@@ -14,6 +14,7 @@ function App() {
   const timer = setTimeout(() => {
     setAnimate(false);
   }, 4000);
+  
   return (
     animate ? (<SplashScreen />) :
       (

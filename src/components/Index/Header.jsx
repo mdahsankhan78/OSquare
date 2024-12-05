@@ -12,7 +12,7 @@ const Header = () => {
     const handleDataFetched = (data) => {
         setUserData(data);
     };
-    
+
 
     useEffect(() => {
         if (userData && userData.name) {
@@ -26,8 +26,14 @@ const Header = () => {
         <div className="header-radius shadow-card p-4">
             <UserDetails onDataFetched={handleDataFetched} />
             <div className="flex justify-between items-center">
-                <Link to={`/profile`} className="">
-                    {userData != null && <img src={`https://api.osquare.live/${userData.profilePic}`} className='rounded-full h-12 w-12 ' alt="" />}
+                <Link to={`/profile`} >
+                    {userData && userData.profilePic ?
+                        <img src={`https://api.osquare.live/${userData.profilePic}`} className='rounded-full h-12 w-12 ' alt="" />
+                        :
+                        <div className="h-12 w-12 bg-secondary rounded-full flex items-center justify-center text-white">
+                            {initials}
+                        </div>
+                    }
                 </Link>
 
                 <div className="">

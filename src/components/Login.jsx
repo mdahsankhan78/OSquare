@@ -5,11 +5,13 @@ import { Button } from './ui/button'
 import { Input2 } from './ui/input2'
 import { faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import axios from 'axios'
+import {apiUrls} from './../api/apiUrls' 
 
 const Login = () => {
     const [next, setNext] = useState(false);
     const [data, setData] = useState({ email: '', password: '' });
     const [msg, setMsg] = useState();
+    const apiUrl = apiUrls.login;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     useEffect(() => {
@@ -38,7 +40,7 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        axios.post('https://api.osquare.live/api/User/Login', data)
+        axios.post(apiUrl, data)
             .then(response => {
                 console.log(response);
                 setMsg('')
@@ -71,7 +73,7 @@ const Login = () => {
             });
     };
 
-
+console.log(apiUrl);
 
     return (
         <>
