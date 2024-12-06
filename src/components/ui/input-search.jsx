@@ -10,13 +10,13 @@ const Search = React.forwardRef(({ className, type, icon, ...props }, ref) => {
         {/* Icon placed inside input, aligned to the left */}
         <FontAwesomeIcon
           icon={faSearch}
-          className="absolute left-4 top-2/3 transform -translate-y-1 text-black z-10"
+          className="absolute left-4 top-2/3 transform -translate-y-1 text-gray-800 z-10"
         />
         <input
           autocomplete="off"
           type={type}
           className={cn(
-            "relative w-full rounded-xl flex h-9 pl-12 pr-3 py-6 text-base bg-muted shadow-sm transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground md:text-sm",
+            "relative w-full rounded-xl flex h-9 pl-12 pr-3 py-6 text-gray-800 bg-input shadow-sm transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground md:text-sm",
             className
           )}
           ref={ref}

@@ -46,10 +46,10 @@ const Profile = () => {
                     <Header name={userData.firstName} email={userData.email} profilePic={userData.profilePic} />
                     <div className="p-4">
                         <div className="pt-16 pb-8 text-black text-lg space-y-8 text-center">
-                            <div className="shadow-card p-4 rounded-lg bg-gray-100 space-y-2 overflow-x-auto data-scroll">
+                            <div className="shadow-card p-4 rounded-lg bg-card space-y-2 overflow-x-auto data-scroll text-accent">
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4 '>
-                                        <FontAwesomeIcon className='text-gray-700' icon={faPerson} />
+                                        <FontAwesomeIcon icon={faPerson} />
                                         <p>Name</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -57,7 +57,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon className='text-gray-700' icon={faEnvelope} />
+                                        <FontAwesomeIcon icon={faEnvelope} />
                                         <p>Email</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -65,17 +65,17 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon className='text-gray-700' icon={faPhone} />
+                                        <FontAwesomeIcon icon={faPhone} />
                                         <p>Phone</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
                                     <p className='col-span-2 '>+92 {userData.contact}</p>
                                 </div>
                             </div>
-                            <div className="shadow-card p-4 rounded-lg bg-gray-100 space-y-2 overflow-x-auto data-scroll">
+                            <div className="shadow-card p-4 rounded-lg bg-card space-y-2 overflow-x-auto data-scroll text-accent">
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon className='text-gray-700' icon={faBuilding} />
+                                        <FontAwesomeIcon icon={faBuilding} />
                                         <p>Department</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -83,7 +83,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon className='text-gray-700' icon={faFlag} />
+                                        <FontAwesomeIcon icon={faFlag} />
                                         <p>Designation</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -91,7 +91,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon className='text-gray-700' icon={faFile} />
+                                        <FontAwesomeIcon icon={faFile} />
                                         <p>Reports to</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -99,7 +99,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon className='text-gray-700' icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
                                         <p>Cost</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -107,7 +107,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon className='text-gray-700' icon={faClock} />
+                                        <FontAwesomeIcon icon={faClock} />
                                         <p>Shift</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -115,7 +115,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon className='text-gray-700' icon={faIdCard} />
+                                        <FontAwesomeIcon icon={faIdCard} />
                                         <p>Machine ID</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -151,8 +151,6 @@ const Profile = () => {
                     border: 2px solidhsl(var(--foreground));
                     border-radius:0 0 10px 10px;
                 }
-                    
-
                 `}
             </style>
         </>

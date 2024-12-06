@@ -12,4 +12,13 @@ export const apiUrls = {
     // Shift
     shift : `${baseUrl}Shift/GetById?id=`,
 
+    // UserSettings
+    userSettings : `${baseUrl}UserSettings/GetByUserId?userId=`,
+    allUserSettings : `${baseUrl}UserSettings/GetAll`,
+
+    //Attendance
+    attendancebyId1 : `${baseUrl}Attendance/GetByEmployee?id=`,
+    attendancebyId2 : `&startDate=`,
+    attendancebyId3 : `&endDate=`,
+
 }

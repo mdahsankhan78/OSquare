@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { faCamera, faHome, faCog, faComment, faPerson } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faHome, faCog, faComment, faPerson, faUser } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 
 const Navigation = () => {
@@ -22,7 +22,7 @@ const Navigation = () => {
 
     const Menus = [
         { name: "Home", icon: faHome, dis: "translate-x-0" },
-        { name: "Profile", icon: faPerson, dis: "translate-x-16" },
+        { name: "Profile", icon: faUser, dis: "translate-x-16" },
         { name: "Message", icon: faComment, dis: "translate-x-32" },
         { name: "Photos", icon: faCamera, dis: "translate-x-48" },
         { name: "Settings", icon: faCog, dis: "translate-x-64" },

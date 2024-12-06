@@ -4,6 +4,7 @@ import React from 'react';
 import { Search } from '../ui/input-search';
 import { Link } from 'react-router-dom';
 import GoBack from '../ui/GoBack';
+import { ThemeToggler } from '../ui/ThemeToggler';
 
 const Header = ({ name, email, profilePic }) => {
     const nameParts = name.split(" ");
@@ -14,9 +15,12 @@ const Header = ({ name, email, profilePic }) => {
     return (
         <>
             <div className="header-radius shadow-card p-4 h-40 bg-gradient-to-r from-[#454FCA] to-[#F86C70] w-full relative">
-                <GoBack color={'white'} />
+                <div className="flex justify-between">
+                    <GoBack color={'white'} />
+                    <ThemeToggler/>
+                </div>
                 <div className="flex justify-center">
-                    <div className="rounded-2xl shadow-card bg-white px-6 py-4 absolute -bottom-10 flex items-center gap-x-4">
+                    <div className="rounded-2xl shadow-card bg-card px-6 py-4 absolute -bottom-10 flex items-center gap-x-4">
                         {profilePic ?
                             <img src={`https://api.osquare.live/${profilePic}`} className='rounded-full h-20 w-20 ' alt="" />
                             :
@@ -25,8 +29,8 @@ const Header = ({ name, email, profilePic }) => {
                             </div>
                         }
                         <div>
-                            <h1 className='text-xl font-semibold mt-2 text-black'>{name}</h1>
-                            <h1 className='text-xl font-semibold text-foreground mb-3'>Add another account</h1>
+                            <h1 className='text-xl font-semibold mt-2 text-accent'>{name}</h1>
+                            <h1 className='text-xl font-semibold text-accent-foreground mb-3'>Add another account</h1>
                         </div>
                     </div>
                 </div>

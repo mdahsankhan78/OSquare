@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from './ui/button'
 import { Input2 } from './ui/input2'

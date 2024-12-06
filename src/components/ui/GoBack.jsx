@@ -14,7 +14,7 @@ const GoBack = ({ to , color}) => {
     <>
       <div className="cursor-pointer" onClick={handleGoBack}>
         <Link to={to}>
-          <FontAwesomeIcon icon={faArrowLeft} className={`h-7 text-${color}`} />
+          <FontAwesomeIcon icon={faArrowLeft} className={`h-5 text-${color}`} />
         </Link>
       </div>
     </>

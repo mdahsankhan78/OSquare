@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"   
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"   
 import { Button } from './ui/button'
 import { Input2 } from './ui/input2'
 import { faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import axios from 'axios'
 import {apiUrls} from './../api/apiUrls' 
+import { useTheme } from './ui/ThemeProvider'
 
 const Login = () => {
+    const { theme } = useTheme();
     const [next, setNext] = useState(false);
     const [data, setData] = useState({ email: '', password: '' });
     const [msg, setMsg] = useState();
@@ -73,13 +75,15 @@ const Login = () => {
             });
     };
 
-console.log(apiUrl);
-
     return (
         <>
             <div className="h-screen flex flex-col justify-center space-y-10 items-center mx-6">
-                <div className="relative flex justify-center">
+                <div className="flex justify-center">
+                    {theme === 'light' ? 
                     <img src="/images/osquare-dark.png" className="h-14 w-auto mt-10" alt="Logo" />
+                    :
+                    <img src="/images/osquare-white.png" className="h-14 w-auto mt-10" alt="Logo" />
+                    }
                 </div>
 
                 <form onSubmit={handleLogin} className="space-y-4 w-full max-w-md">

@@ -1,4 +1,4 @@
-import React, {useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import CustomLink from "../ui/CustomLink";
 import { faBuilding, faClock, faEnvelope, faFile, faFlag, faIdCard, faPhone, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -49,11 +49,11 @@ export function ExpandableCardDemo() {
     }
 
     return (
-        <div className="my-20">
+        <div className="my-10">
             <GetEmployees onDataFetched={handleDataFetched} />
 
             <div className="flex items-center">
-                <h1 className='text-black text-2xl font-semibold'>Employees</h1>
+                <h1 className='text-accent text-2xl font-semibold'>Employees</h1>
                 <CustomLink text={'Add Employee'} className='ml-auto px-6' />
             </div>
 
@@ -62,46 +62,46 @@ export function ExpandableCardDemo() {
                 <Drawer>
                     <ul className="mx-auto w-full gap-4 mt-4">
                         {userData && userData.map((user) => (
-                            <div
-                                key={`card-${user.id}`}
-                                className="p-4 flex flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 cursor-pointer border-b-2 border-gray-300">
-                                <div className="flex gap-4 flex-row">
-                                    {user.profilePic ?
-                                        <img src={`https://api.osquare.live/${user.profilePic}`} className="rounded-full h-12 w-12" alt="" />
-                                        :
-                                        (() => {
-                                            const nameParts = user.firstName.split(" ");
-                                            const generatedInitials = nameParts.map(part => part.charAt(0).toUpperCase()).join("");
-                                            return <div className="h-12 w-12 bg-secondary rounded-full flex items-center justify-center text-white">
-                                                {generatedInitials}
-                                            </div>;
-                                        })()
+                            <DrawerTrigger asChild>
+                                <div
+                                    onClick={() => {
+                                        getShift(user.shiftId);
+                                        setActiveId(user.id);
                                     }
-
-                                    <div>
-                                        <h3
-                                            className="font-medium text-neutral-800 dark:text-neutral-200 md:text-left">
-                                            {user.firstName} {user.lastName}
-                                        </h3>
-                                        <p
-                                            className="text-neutral-600 dark:text-neutral-400 md:text-left">
-                                            {user.designation}
-                                        </p>
-                                    </div>
-                                </div>
-                                <DrawerTrigger asChild>
-                                    <button
-                                        className="flex items-center justify-center bg-white shadow-cta hover:shadow-cta-hover h-10 w-10 rounded-full"
-                                        onClick={() => {
-                                            getShift(user.shiftId);
-                                            setActiveId(user.id);
+                                    }
+                                    key={`card-${user.id}`}
+                                    className="p-4 flex flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-card cursor-pointer border-b-2 border-gray-300">
+                                    <div className="flex gap-4 flex-row">
+                                        {user.profilePic ?
+                                            <img src={`https://api.osquare.live/${user.profilePic}`} className="rounded-full h-12 w-12" alt="" />
+                                            :
+                                            (() => {
+                                                const nameParts = user.firstName.split(" ");
+                                                const generatedInitials = nameParts.map(part => part.charAt(0).toUpperCase()).join("");
+                                                return <div className="h-12 w-12 bg-secondary rounded-full flex items-center justify-center text-white">
+                                                    {generatedInitials}
+                                                </div>;
+                                            })()
                                         }
-                                        }>
+
+                                        <div>
+                                            <h3
+                                                className="font-medium text-neutral-800 dark:text-neutral-200 md:text-left">
+                                                {user.firstName} {user.lastName}
+                                            </h3>
+                                            <p
+                                                className="text-neutral-600 dark:text-neutral-400 md:text-left">
+                                                {user.designation}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <button className="flex items-center justify-center underline" >
                                         Details
                                     </button>
-                                </DrawerTrigger>
 
-                            </div>
+                                </div>
+                            </DrawerTrigger>
                         ))}
                     </ul>
                     {activeCard ? (
@@ -110,7 +110,7 @@ export function ExpandableCardDemo() {
                             <div className="grid place-items-center">
                                 <div
                                     ref={ref}
-                                    className="w-full h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-y-auto dashboard-scroll">
+                                    className="w-full h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-card sm:rounded-3xl overflow-y-auto dashboard-scroll">
                                     <div className="flex flex-col items-center border-b-2 border-border py-6">
                                         {activeCard.profilePic ?
                                             <img src={`https://api.osquare.live/${activeCard.profilePic}`} className="rounded-full h-16 w-16" alt="" />
@@ -124,15 +124,15 @@ export function ExpandableCardDemo() {
                                             })()
                                         }
 
-                                        <h1 className='text-2xl font-semibold mt-2 text-black'>{activeCard.firstName} {activeCard.lastName}</h1>
-                                        <h1 className='text-xl font-semibold text-foreground mb-3'>{activeCard.designation}</h1>
+                                        <h1 className='text-2xl font-semibold mt-2 text-accent'>{activeCard.firstName} {activeCard.lastName}</h1>
+                                        <h1 className='text-xl font-semibold text-accent-foreground mb-3'>{activeCard.designation}</h1>
                                     </div>
 
                                     <div>
-                                        <div className="p-8 text-black text-lg space-y-4 text-center overflow-x-auto data-scroll">
+                                        <div className="p-8 text-accent text-lg space-y-4 text-center overflow-x-auto data-scroll">
                                             <div className="grid grid-cols-5 gap-x-2">
                                                 <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon className='text-gray-700' icon={faEnvelope} />
+                                                    <FontAwesomeIcon icon={faEnvelope} />
                                                     <p>Email</p>
                                                 </div>
                                                 <p className='col-span-1'>:</p>
@@ -140,7 +140,7 @@ export function ExpandableCardDemo() {
                                             </div>
                                             <div className="grid grid-cols-5 gap-x-2">
                                                 <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon className='text-gray-700' icon={faPhone} />
+                                                    <FontAwesomeIcon icon={faPhone} />
                                                     <p>Phone</p>
                                                 </div>
                                                 <p className='col-span-1'>:</p>
@@ -148,7 +148,7 @@ export function ExpandableCardDemo() {
                                             </div>
                                             <div className="grid grid-cols-5 gap-x-2">
                                                 <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon className='text-gray-700' icon={faBuilding} />
+                                                    <FontAwesomeIcon icon={faBuilding} />
                                                     <p>Department</p>
                                                 </div>
                                                 <p className='col-span-1'>:</p>
@@ -156,7 +156,7 @@ export function ExpandableCardDemo() {
                                             </div>
                                             <div className="grid grid-cols-5 gap-x-2">
                                                 <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon className='text-gray-700' icon={faFlag} />
+                                                    <FontAwesomeIcon icon={faFlag} />
                                                     <p>Designation</p>
                                                 </div>
                                                 <p className='col-span-1'>:</p>
@@ -164,15 +164,15 @@ export function ExpandableCardDemo() {
                                             </div>
                                             <div className="grid grid-cols-5 gap-x-2">
                                                 <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon className='text-gray-700' icon={faFile} />
+                                                    <FontAwesomeIcon icon={faFile} />
                                                     <p>Reports to</p>
                                                 </div>
                                                 <p className='col-span-1'>:</p>
-                                                <p className='col-span-2'>{activeCard.reportsTo}</p>
+                                                <p className='col-span-2'>{activeCard.reportsTo ? activeCard.reportsTo : '---'}</p>
                                             </div>
                                             <div className="grid grid-cols-5 gap-x-2">
                                                 <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon className='text-gray-700' icon={faStar} />
+                                                    <FontAwesomeIcon icon={faStar} />
                                                     <p>Cost</p>
                                                 </div>
                                                 <p className='col-span-1'>:</p>
@@ -180,7 +180,7 @@ export function ExpandableCardDemo() {
                                             </div>
                                             <div className="grid grid-cols-5 gap-x-2">
                                                 <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon className='text-gray-700' icon={faClock} />
+                                                    <FontAwesomeIcon icon={faClock} />
                                                     <p>Shift</p>
                                                 </div>
                                                 <p className='col-span-1'>:</p>
@@ -188,7 +188,7 @@ export function ExpandableCardDemo() {
                                             </div>
                                             <div className="grid grid-cols-5 gap-x-2">
                                                 <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon className='text-gray-700' icon={faIdCard} />
+                                                    <FontAwesomeIcon icon={faIdCard} />
                                                     <p>Machine ID</p>
                                                 </div>
                                                 <p className='col-span-1'>:</p>
@@ -203,7 +203,7 @@ export function ExpandableCardDemo() {
                     ) : null}
                 </Drawer>
                 :
-                <Spinner/>
+                <Spinner />
             }
 
             <style jsx>
