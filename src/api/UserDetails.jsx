@@ -22,7 +22,7 @@ const UserDetails = ({ onDataFetched }) => {
             const fetchData = async () => {
                 try {
                     const response = await axios.get(
-                        `${apiUrl}${id}`,
+                        `${apiUrl}${id}`,       
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ const UserDetails = ({ onDataFetched }) => {
 
             fetchData();
         }
-    }, [id, token, onDataFetched]); 
+    }, [id, token]); 
 
     return null;
 };

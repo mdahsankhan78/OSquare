@@ -12,6 +12,12 @@ const Header = ({ name, email, profilePic }) => {
     // Extract the first letter of each part of the name
     const initials = nameParts.map(part => part.charAt(0).toUpperCase()).join("");
 
+    const logout = () => {
+        localStorage.removeItem('token');
+        setTimeout(() => {
+            window.location.href = `/login`;
+        }, 1000);
+    }
     return (
         <>
             <div className="header-radius shadow-card p-4 h-40 bg-gradient-to-r from-[#454FCA] to-[#F86C70] w-full relative">
@@ -29,8 +35,8 @@ const Header = ({ name, email, profilePic }) => {
                             </div>
                         }
                         <div>
-                            <h1 className='text-xl font-semibold mt-2 text-accent'>{name}</h1>
-                            <h1 className='text-xl font-semibold text-accent-foreground mb-3'>Add another account</h1>
+                            <h1 className='text-xl font-semibold text-accent'>{name}</h1>
+                            <h1 className='text-xl font-semibold text-accent-foreground'>Sign Out</h1>
                         </div>
                     </div>
                 </div>

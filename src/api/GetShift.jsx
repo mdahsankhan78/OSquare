@@ -23,7 +23,7 @@ const GetShift = ({ Id, onShiftFetched }) => {
         };
 
         fetchData();
-    }, [token, onShiftFetched]);
+    }, [token]);
 
     return null;
 }

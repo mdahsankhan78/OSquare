@@ -8,6 +8,13 @@ export const apiUrls = {
     // Employee
     employee:`${baseUrl}Employee/GetByUserId?id=`,
     employees:`${baseUrl}Employee/GetAll`,
+    employeementInfo: `${baseUrl}EmployeementInformation/GetByEmployeeId?id=`,
+    employeeBankInfo: `${baseUrl}EmployeeBankInformation/GetByEmployeeId?id=`,
+    employeeEmergencyInfo: `${baseUrl}EmployeeEmergencyContact/GetByEmployeeId?id=`,
+    employeeOfficialContactinfo: `${baseUrl}EmployeeOfficialContact/GetByEmployeeId?id=`,
+    employeePersonalinfo: `${baseUrl}EmployeePersonalInformation/GetByEmployeeId?id=`,
+    employeePersonalContactinfo: `${baseUrl}EmployeePersonalContactInformation/GetByEmployeeId?id=`,
+    employeeTasks: `${baseUrl}EmployeeTask/GetByEmployeeId?id=`,
 
     // Shift
     shift : `${baseUrl}Shift/GetById?id=`,
@@ -20,5 +27,6 @@ export const apiUrls = {
     attendancebyId1 : `${baseUrl}Attendance/GetByEmployee?id=`,
     attendancebyId2 : `&startDate=`,
     attendancebyId3 : `&endDate=`,
+
 
 }

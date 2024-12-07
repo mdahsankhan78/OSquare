@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react'
 import GoBack from './ui/GoBack'
 import { useNavigate, useParams } from 'react-router-dom';
 import OutlineButton from './ui/OutlineButton';
-import { faBuilding, faClock, faEdit, faEnvelope, faFile, faFlag, faIdCard, faPerson, faPhone, faRightToBracket, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faClock, faEnvelope, faFile, faFlag, faIdCard, faPhone, faStar, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Header from './Profile/Header';
 import UserDetails from '../api/UserDetails';
 import GetShift from '../api/GetShift';
 import Spinner from './ui/Spinner';
 import TokenExpired from '../api/TokenExpired';
+import { Clock, Flag, HardDrive, Mail, Phone, RouteIcon, Star, User, Waypoints } from 'lucide-react';
+import ProfileTabs from './Profile/ProfileTabs';
 
 const Profile = () => {
     const [isUserLoggedIn, setisUserLoggedIn] = useState(true)
@@ -35,6 +37,7 @@ const Profile = () => {
             window.location.href = `/login`;
         }, 1000);
     }
+    
 
     return (
         <>
@@ -49,15 +52,15 @@ const Profile = () => {
                             <div className="shadow-card p-4 rounded-lg bg-card space-y-2 overflow-x-auto data-scroll text-accent">
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4 '>
-                                        <FontAwesomeIcon icon={faPerson} />
-                                        <p>Name</p>
+                                        <User className='h-5' />
+                                        <p>Full Name</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
                                     <p className='col-span-2'>{userData.firstName} {userData.lastName}</p>
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon icon={faEnvelope} />
+                                        <Mail className='h-5' />
                                         <p>Email</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -65,17 +68,15 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon icon={faPhone} />
-                                        <p>Phone</p>
+                                        <Phone className='h-5'/>
+                                        <p>Contact</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
-                                    <p className='col-span-2 '>+92 {userData.contact}</p>
+                                    <p className='col-span-2'>+92 {userData.contact}</p>
                                 </div>
-                            </div>
-                            <div className="shadow-card p-4 rounded-lg bg-card space-y-2 overflow-x-auto data-scroll text-accent">
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon icon={faBuilding} />
+                                        <Waypoints className='h-5'/>
                                         <p>Department</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -83,7 +84,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon icon={faFlag} />
+                                        <Flag className='h-5'/>
                                         <p>Designation</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -91,7 +92,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon icon={faFile} />
+                                        <RouteIcon className='h-5'/>
                                         <p>Reports to</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -99,7 +100,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon icon={faStar} />
+                                        <Star className='h-5'/>
                                         <p>Cost</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -107,7 +108,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon icon={faClock} />
+                                        <Clock className='h-5'/>
                                         <p>Shift</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -115,7 +116,7 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4'>
-                                        <FontAwesomeIcon icon={faIdCard} />
+                                        <HardDrive className='h-5'/>
                                         <p>Machine ID</p>
                                     </div>
                                     <p className='col-span-1'>:</p>
@@ -124,8 +125,11 @@ const Profile = () => {
                             </div>
                         </div>
 
+                        {/* //All employee details here */}
+                        <ProfileTabs/>
 
-                        <div className="justify-center flex">
+
+                        <div className="justify-center flex my-4">
                             <OutlineButton onClick={logout} text={'Sign out'} />
                         </div>
                     </div>
