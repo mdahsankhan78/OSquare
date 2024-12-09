@@ -28,7 +28,7 @@ const Header = () => {
     return (
         <div className="header-radius shadow-card p-4 bg-card">
             <UserDetails onDataFetched={handleDataFetched} />
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between">
                 <Link to={`/profile`} >
                     {userData ? userData.profilePic ?
                         <img src={`https://api.osquare.live/${userData.profilePic}`} className='rounded-full h-12 w-12 ' alt="" />
@@ -45,9 +45,13 @@ const Header = () => {
             </div>
             <div className="flex justify-center ">
                 {theme === 'light' ?
+                    <Link to='/'>
                     <img src="/images/osquare-dark.png" className='h-14' alt="" />
+                    </Link>
                     :
+                    <Link to='/'>
                     <img src="/images/osquare-white.png" className='h-14' alt="" />
+                    </Link>
                 }
             </div>
 

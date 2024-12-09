@@ -48,7 +48,7 @@ const Profile = () => {
                     <GetShift onShiftFetched={handleShiftFetched} Id={userData.shiftId} />
                     <Header name={userData.firstName} email={userData.email} profilePic={userData.profilePic} />
                     <div className="p-4">
-                        <div className="pt-16 pb-8 text-black text-lg space-y-8 text-center">
+                        <div className="pt-16 pb-8 text-lg space-y-8 text-center">
                             <div className="shadow-card p-4 rounded-lg bg-card space-y-2 overflow-x-auto data-scroll text-accent">
                                 <div className="grid grid-cols-5 gap-x-2">
                                     <div className='col-span-2 flex items-center space-x-4 '>
@@ -137,7 +137,7 @@ const Profile = () => {
 
                 :
 
-                <div className="h-screen flex items-center">
+                <div className="h-screen flex items-center justify-center">
                     <Spinner />
                 </div>
             }

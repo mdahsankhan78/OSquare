@@ -140,7 +140,9 @@ const ProfileTabs = () => {
               </div>
             </>
             :
-            <Spinner />
+            <div className="h-16 flex items-center justify-center">
+              <Spinner />
+            </div>
           }
 
           <ProfileCard text1={'Employee Card Front'} text2={'Employee Card Back'} text3={'Health Card Front'} text4={'Health Card Back'}/>
@@ -220,7 +222,9 @@ const ProfileTabs = () => {
               <ProfileCard text1={'CNIC Front'} text2={'CNIC Back'} text3={'Driving License Front'} text4={'Driving License Back'}/>
             </>
             :
-            <Spinner />
+             <div className="h-16 flex items-center justify-center">
+              <Spinner />
+            </div>
           }
         </TabsContent>
 
@@ -253,7 +257,9 @@ const ProfileTabs = () => {
               </div>
             </>
             :
-            <Spinner />
+             <div className="h-16 flex items-center justify-center">
+              <Spinner />
+            </div>
           }
         </TabsContent>
 
@@ -299,7 +305,9 @@ const ProfileTabs = () => {
               </div>
             </>
             :
-            <Spinner />
+             <div className="h-16 flex items-center justify-center">
+              <Spinner />
+            </div>
           }
         </TabsContent>
 
@@ -357,7 +365,9 @@ const ProfileTabs = () => {
               </div>
             </>
             :
-            <Spinner />
+             <div className="h-16 flex items-center justify-center">
+              <Spinner />
+            </div>
           }
         </TabsContent>
 
@@ -390,7 +400,9 @@ const ProfileTabs = () => {
               </div>
             </>
             :
-            <Spinner />
+             <div className="h-16 flex items-center justify-center">
+              <Spinner />
+            </div>
           }
         </TabsContent>
       </Tabs>

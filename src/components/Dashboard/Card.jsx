@@ -18,9 +18,6 @@ export function ExpandableCardDemo() {
     const handleDataFetched = (data) => {
         setUserData(data);
     };
-    const handleShiftFetched = (shift) => {
-        setShift(shift);
-    };
 
     const [activeId, setActiveId] = useState(null);
     const ref = useRef(null);
@@ -49,7 +46,7 @@ export function ExpandableCardDemo() {
     }
 
     return (
-        <div className="my-10">
+        <div className="my-10 pb-10">
             <GetEmployees onDataFetched={handleDataFetched} />
 
             <div className="flex items-center">
@@ -105,97 +102,104 @@ export function ExpandableCardDemo() {
                         ))}
                     </ul>
                     {activeCard ? (
-                        shift && shift.id === activeCard.shiftId &&
                         <DrawerContent>
                             <div className="grid place-items-center">
                                 <div
                                     ref={ref}
                                     className="w-full h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-card sm:rounded-3xl overflow-y-auto dashboard-scroll">
-                                    <div className="flex flex-col items-center border-b-2 border-border py-6">
-                                        {activeCard.profilePic ?
-                                            <img src={`https://api.osquare.live/${activeCard.profilePic}`} className="rounded-full h-16 w-16" alt="" />
-                                            :
-                                            (() => {
-                                                const nameParts = activeCard.firstName.split(" ");
-                                                const generatedInitials = nameParts.map(part => part.charAt(0).toUpperCase()).join("");
-                                                return <div className="h-16 w-16 bg-secondary rounded-full flex items-center justify-center text-white">
-                                                    {generatedInitials}
-                                                </div>;
-                                            })()
-                                        }
+                                    {shift && shift.id === activeCard.shiftId ?
+                                        <>
+                                            <div className="flex flex-col items-center border-b-2 border-border py-6">
+                                                {activeCard.profilePic ?
+                                                    <img src={`https://api.osquare.live/${activeCard.profilePic}`} className="rounded-full h-16 w-16" alt="" />
+                                                    :
+                                                    (() => {
+                                                        const nameParts = activeCard.firstName.split(" ");
+                                                        const generatedInitials = nameParts.map(part => part.charAt(0).toUpperCase()).join("");
+                                                        return <div className="h-16 w-16 bg-secondary rounded-full flex items-center justify-center text-white">
+                                                            {generatedInitials}
+                                                        </div>;
+                                                    })()
+                                                }
 
-                                        <h1 className='text-2xl font-semibold mt-2 text-accent'>{activeCard.firstName} {activeCard.lastName}</h1>
-                                        <h1 className='text-xl font-semibold text-accent-foreground mb-3'>{activeCard.designation}</h1>
-                                    </div>
+                                                <h1 className='text-2xl font-semibold mt-2 text-accent'>{activeCard.firstName} {activeCard.lastName}</h1>
+                                                <h1 className='text-xl font-semibold text-accent-foreground mb-3'>{activeCard.designation}</h1>
+                                            </div>
 
-                                    <div>
-                                        <div className="p-8 text-accent text-lg space-y-4 text-center overflow-x-auto data-scroll">
-                                            <div className="grid grid-cols-5 gap-x-2">
-                                                <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon icon={faEnvelope} />
-                                                    <p>Email</p>
+                                            <div>
+                                                <div className="p-8 text-accent text-lg space-y-4 text-center overflow-x-auto data-scroll">
+                                                    <div className="grid grid-cols-5 gap-x-2">
+                                                        <div className='col-span-2 flex items-center space-x-4'>
+                                                            <FontAwesomeIcon icon={faEnvelope} />
+                                                            <p>Email</p>
+                                                        </div>
+                                                        <p className='col-span-1'>:</p>
+                                                        <p className='col-span-2'>{activeCard.email}</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-5 gap-x-2">
+                                                        <div className='col-span-2 flex items-center space-x-4'>
+                                                            <FontAwesomeIcon icon={faPhone} />
+                                                            <p>Phone</p>
+                                                        </div>
+                                                        <p className='col-span-1'>:</p>
+                                                        <p className='col-span-2'>+92 {activeCard.contact}</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-5 gap-x-2">
+                                                        <div className='col-span-2 flex items-center space-x-4'>
+                                                            <FontAwesomeIcon icon={faBuilding} />
+                                                            <p>Department</p>
+                                                        </div>
+                                                        <p className='col-span-1'>:</p>
+                                                        <p className='col-span-2'>{activeCard.department}</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-5 gap-x-2">
+                                                        <div className='col-span-2 flex items-center space-x-4'>
+                                                            <FontAwesomeIcon icon={faFlag} />
+                                                            <p>Designation</p>
+                                                        </div>
+                                                        <p className='col-span-1'>:</p>
+                                                        <p className='col-span-2'>{activeCard.designation}</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-5 gap-x-2">
+                                                        <div className='col-span-2 flex items-center space-x-4'>
+                                                            <FontAwesomeIcon icon={faFile} />
+                                                            <p>Reports to</p>
+                                                        </div>
+                                                        <p className='col-span-1'>:</p>
+                                                        <p className='col-span-2'>{activeCard.reportsTo ? activeCard.reportsTo : '---'}</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-5 gap-x-2">
+                                                        <div className='col-span-2 flex items-center space-x-4'>
+                                                            <FontAwesomeIcon icon={faStar} />
+                                                            <p>Cost</p>
+                                                        </div>
+                                                        <p className='col-span-1'>:</p>
+                                                        <p className='col-span-2'>{activeCard.cost}</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-5 gap-x-2">
+                                                        <div className='col-span-2 flex items-center space-x-4'>
+                                                            <FontAwesomeIcon icon={faClock} />
+                                                            <p>Shift</p>
+                                                        </div>
+                                                        <p className='col-span-1'>:</p>
+                                                        <p className='col-span-2'>{shift ? shift.title : ''}</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-5 gap-x-2">
+                                                        <div className='col-span-2 flex items-center space-x-4'>
+                                                            <FontAwesomeIcon icon={faIdCard} />
+                                                            <p>Machine ID</p>
+                                                        </div>
+                                                        <p className='col-span-1'>:</p>
+                                                        <p className='col-span-2'>{activeCard.machineId}</p>
+                                                    </div>
                                                 </div>
-                                                <p className='col-span-1'>:</p>
-                                                <p className='col-span-2'>{activeCard.email}</p>
                                             </div>
-                                            <div className="grid grid-cols-5 gap-x-2">
-                                                <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon icon={faPhone} />
-                                                    <p>Phone</p>
-                                                </div>
-                                                <p className='col-span-1'>:</p>
-                                                <p className='col-span-2'>+92 {activeCard.contact}</p>
-                                            </div>
-                                            <div className="grid grid-cols-5 gap-x-2">
-                                                <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon icon={faBuilding} />
-                                                    <p>Department</p>
-                                                </div>
-                                                <p className='col-span-1'>:</p>
-                                                <p className='col-span-2'>{activeCard.department}</p>
-                                            </div>
-                                            <div className="grid grid-cols-5 gap-x-2">
-                                                <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon icon={faFlag} />
-                                                    <p>Designation</p>
-                                                </div>
-                                                <p className='col-span-1'>:</p>
-                                                <p className='col-span-2'>{activeCard.designation}</p>
-                                            </div>
-                                            <div className="grid grid-cols-5 gap-x-2">
-                                                <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon icon={faFile} />
-                                                    <p>Reports to</p>
-                                                </div>
-                                                <p className='col-span-1'>:</p>
-                                                <p className='col-span-2'>{activeCard.reportsTo ? activeCard.reportsTo : '---'}</p>
-                                            </div>
-                                            <div className="grid grid-cols-5 gap-x-2">
-                                                <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon icon={faStar} />
-                                                    <p>Cost</p>
-                                                </div>
-                                                <p className='col-span-1'>:</p>
-                                                <p className='col-span-2'>{activeCard.cost}</p>
-                                            </div>
-                                            <div className="grid grid-cols-5 gap-x-2">
-                                                <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon icon={faClock} />
-                                                    <p>Shift</p>
-                                                </div>
-                                                <p className='col-span-1'>:</p>
-                                                <p className='col-span-2'>{shift ? shift.title : ''}</p>
-                                            </div>
-                                            <div className="grid grid-cols-5 gap-x-2">
-                                                <div className='col-span-2 flex items-center space-x-4'>
-                                                    <FontAwesomeIcon icon={faIdCard} />
-                                                    <p>Machine ID</p>
-                                                </div>
-                                                <p className='col-span-1'>:</p>
-                                                <p className='col-span-2'>{activeCard.machineId}</p>
-                                            </div>
+                                        </>
+                                        :
+                                        <div className="h-[40rem] justify-center items-center flex">
+                                            <Spinner />
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </DrawerContent>
@@ -203,7 +207,9 @@ export function ExpandableCardDemo() {
                     ) : null}
                 </Drawer>
                 :
-                <Spinner />
+                <div className="h-40 justify-center items-center flex">
+                    <Spinner />
+                </div>
             }
 
             <style jsx>

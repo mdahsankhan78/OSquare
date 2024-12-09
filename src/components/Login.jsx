@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Input } from "./ui/input"
-import { Label } from "./ui/label"   
+import { Label } from "./ui/label"
 import { Button } from './ui/button'
 import { Input2 } from './ui/input2'
 import { faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import axios from 'axios'
-import {apiUrls} from './../api/apiUrls' 
+import { apiUrls } from './../api/apiUrls'
 import { useTheme } from './ui/ThemeProvider'
+import Spinner from './ui/Spinner'
 
 const Login = () => {
     const { theme } = useTheme();
+    const [loading, setLoading] = useState(false);
     const [next, setNext] = useState(false);
     const [data, setData] = useState({ email: '', password: '' });
     const [msg, setMsg] = useState();
@@ -40,6 +42,7 @@ const Login = () => {
         }
     }
     const handleLogin = (e) => {
+        setLoading(true)
         e.preventDefault();
 
         axios.post(apiUrl, data)
@@ -51,6 +54,7 @@ const Login = () => {
                     localStorage.setItem('token', token);
                     setTimeout(() => {
                         window.location.href = `/`;
+
                     }, 1000);
                 }
             })
@@ -64,12 +68,15 @@ const Login = () => {
                         }
                         else if (error.response.data && error.response.data.password) {
                             setMsg(error.response.data.password);
+                            setLoading(false)
                         }
                     } else {
+                        setLoading(false)
                         setMsg('An error occurred. Please try again.');
                     }
                 }
                 else {
+                    setLoading(false)
                     setMsg('Network error. Please check your connection.');
                 }
             });
@@ -79,25 +86,17 @@ const Login = () => {
         <>
             <div className="h-screen flex flex-col justify-center space-y-10 items-center mx-6">
                 <div className="flex justify-center">
-                    {theme === 'light' ? 
                     <img src="/images/osquare-dark.png" className="h-14 w-auto mt-10" alt="Logo" />
-                    :
-                    <img src="/images/osquare-white.png" className="h-14 w-auto mt-10" alt="Logo" />
-                    }
                 </div>
 
                 <form onSubmit={handleLogin} className="space-y-4 w-full max-w-md">
                     {next ?
                         <>
-
                             <Label htmlFor='pass' className='text-xl font-semibold'>Sign In</Label>
                             <Input2 id='pass' placeholder='Password' value={data.password} name='password' onChange={handleInput} icon={faEyeSlash} icon2={faEye} />
                             <p className='text-red-600'>{msg}</p>
-                            {/* <div className="mb-2">
-                                    <p className="text-black font-normal">Forgot Password? <br /><p to={'/register'} className="font-semibold text-primary">Email code to {data.email}</p></p>
-                                </div> */}
                             <p className='cursor-pointer mb-2' onClick={() => setNext(false)}>{data.email}</p>
-                            <Button type='submit' disabled={!data.password}>Sign in</Button>
+                            <Button type='submit' disabled={!data.password}>{loading && <Spinner />} Sign in</Button>
                         </>
                         :
                         <>
@@ -105,11 +104,6 @@ const Login = () => {
                             <Input id='email' type='email' placeholder='Email, Phone or Skype' value={data.email} name='email' onChange={handleInput} icon={faEnvelope} />
                             <p className='text-red-600 mt-2'>{msg}</p>
                             <div className="mt-6">
-                                {/* <div className="mb-2">
-                                    <p className="text-black font-normal">Don't have an account? <Link to={'/register'} className="font-semibold text-primary">Create one</Link></p>
-                                </div> */}
-
-
                                 <Button onClick={handleNext} disabled={!data.email}>Next</Button>
                             </div>
                         </>}

@@ -11,11 +11,15 @@ import {
 import AttendanceById from '../../api/AttendanceById'
 import Spinner from './../ui/Spinner'
 import { Badge } from './../ui/badge'
+import { Button } from './../ui/button'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AttendanceTable = () => {
     const [attendances, setAttendances] = useState(null);
     const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
     const [loading, setLoading] = useState(false);
+    const [customRange, setCustomRange] = useState(false); 
 
     const handleDataFetched = (data) => {
         // Sort the data by createdDate in descending order
@@ -31,23 +35,32 @@ const AttendanceTable = () => {
     const handleDateRangeChange = (value) => {
         const today = new Date();
         let startDate;
-        let endDate = today; // Default to today for endDate
+        let endDate = today; 
+
+        if (value === 'custom') {
+            setCustomRange(true);
+            return;
+        }
 
         switch (value) {
             case '7days':
                 startDate = new Date(today);
                 startDate.setDate(today.getDate() - 7);
+                setCustomRange(false);
                 break;
             case '30days':
                 startDate = new Date(today);
                 startDate.setDate(today.getDate() - 30);
+                setCustomRange(false);
                 break;
             case 'thismonth':
                 startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                setCustomRange(false);
                 break;
             case 'lastmonth':
                 startDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
                 endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+                setCustomRange(false);
                 break;
             default:
                 return;
@@ -55,11 +68,14 @@ const AttendanceTable = () => {
 
         setLoading(true);
         setDateRange({ startDate, endDate });
-
-        // Reset attendances while new data is being fetched
-        setAttendances(null);
+        setAttendances(null); 
     };
 
+    const handleCustomDateRangeChange = (startDate, endDate) => {
+        setLoading(true);
+        setDateRange({ startDate, endDate });
+        setAttendances(null);
+    };
 
     // Format date to ISO string for API
     const formatDateToISOString = (date) => {
@@ -84,7 +100,7 @@ const AttendanceTable = () => {
         return date.toLocaleDateString('en-US', options);
     };
 
-    //to fetch time from isoDate
+    // to fetch time from isoDate
     const formatTime = (isoDate) => {
         const date = new Date(isoDate);
 
@@ -122,7 +138,6 @@ const AttendanceTable = () => {
         // Office expected working time (8 hours)
         const officeTime = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
         const earlyOrOvertime = workDuration - officeTime;
-
 
         let status = '';
         let statusClass = '';
@@ -171,12 +186,50 @@ const AttendanceTable = () => {
                             <SelectItem value="30days">Last 30 Days</SelectItem>
                             <SelectItem value="thismonth">This Month</SelectItem>
                             <SelectItem value="lastmonth">Last Month</SelectItem>
+                            <SelectItem value="custom">Custom Range</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
             </div>
 
-            <Table className='my-8'>
+            {customRange && (
+                <div className="sm:flex gap-4 mb-4 items-end">
+                    <div className="flex flex-col">
+                        <label>From:</label>
+                        <DatePicker
+                            selected={dateRange.startDate}
+                            onChange={(date) => setDateRange((prev) => ({ ...prev, startDate: date }))}
+                            selectsStart
+                            startDate={dateRange.startDate}
+                            endDate={dateRange.endDate}
+                            dateFormat="MMM dd, yyyy"
+                            className="border border-card p-2 rounded bg-transparent"
+                            calendarClassName="custom-calendar"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label>To:</label>
+                        <DatePicker
+                            selected={dateRange.endDate}
+                            onChange={(date) => setDateRange((prev) => ({ ...prev, endDate: date }))}
+                            selectsEnd
+                            startDate={dateRange.startDate}
+                            endDate={dateRange.endDate}
+                            minDate={dateRange.startDate}
+                            dateFormat="MMM dd, yyyy"
+                            className="border border-card p-2 rounded bg-transparent"
+                        />
+                    </div>  
+                    <Button
+                        onClick={() => handleCustomDateRangeChange(dateRange.startDate, dateRange.endDate)}
+                        className="btn-primary w-auto mt-2 md:mt-0"
+                    >
+                        Apply
+                    </Button>
+                </div>
+            )}
+
+            <Table className='mb-8'>
                 <TableHeader>
                     <TableRow className='bg-card'>
                         <TableHead>Employee</TableHead>
@@ -190,7 +243,7 @@ const AttendanceTable = () => {
                 </TableHeader>
 
                 {loading ? (
-                    <TableRow>
+                    <TableRow className='h-40'>
                         <TableCell colSpan="7" className="text-center">
                             <Spinner />
                         </TableCell>
@@ -207,7 +260,7 @@ const AttendanceTable = () => {
                                     <TableCell>{formatTime(attendance.signIn)}</TableCell>
                                     <TableCell>{attendance.signOut ? formatTime(attendance.signOut) : '---'}</TableCell>
                                     <TableCell><Badge className={attendance.type === 'On Site' ? 'bg-chart-2' : 'bg-chart-1'}>{attendance.type}</Badge></TableCell>
-                                    <TableCell className='flex flex-col items-center gap-2'>
+                                    <TableCell className='flex flex-col items-center justify-center gap-2 w-[10rem]'>
                                         {attendance.signOut &&
                                             <>
                                                 <Badge className={'bg-chart-3'}>{totalTimeWorked}</Badge>
@@ -218,8 +271,7 @@ const AttendanceTable = () => {
                                 </TableRow>
                             </TableBody>
                         )
-                    }
-                    )
+                    })
                 )}
             </Table>
         </>

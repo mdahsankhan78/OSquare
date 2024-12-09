@@ -21,7 +21,7 @@ const Header = ({ name, email, profilePic }) => {
     return (
         <>
             <div className="header-radius shadow-card p-4 h-40 bg-gradient-to-r from-[#454FCA] to-[#F86C70] w-full relative">
-                <div className="flex justify-between">
+                <div className="flex justify-between ">
                     <GoBack color={'white'} />
                     <ThemeToggler/>
                 </div>
@@ -36,7 +36,7 @@ const Header = ({ name, email, profilePic }) => {
                         }
                         <div>
                             <h1 className='text-xl font-semibold text-accent'>{name}</h1>
-                            <h1 className='text-xl font-semibold text-accent-foreground'>Sign Out</h1>
+                            <h1 className='text-xl font-semibold text-accent-foreground' onClick={logout}>Sign Out</h1>
                         </div>
                     </div>
                 </div>
